@@ -1,0 +1,80 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="HDFCMasterPage.master.cs" Inherits="HDFCMasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <style>
+        table,td{
+            border:2px solid black;
+            border-collapse:collapse;
+        }
+        flex{
+            display:flex;
+            justify-items:center;
+            align-content:center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-4">Simple header</span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+      </ul>
+    </header>
+  </div>
+    <form id="form1" runat="server">
+        <div class="flex">
+        <table>
+        <thead>
+            <tr>
+                <td colspan="5"><h1>HDFC Loans - Next Step to Dream</h1></td>
+            </tr>
+            <tr>
+                <td colspan="4">Logged in: <asp:Label ID="lblUserEmail" runat="server" Text=""></asp:Label></td>
+                <td><button>Logout</button></td>
+            </tr>
+            <tr>
+                <td><a href="Home.aspx">Home</a></td>
+                <td><a href="NewApplication.aspx">New Application</a></td>
+                <td><a href="UpdateApplication.aspx">Update Application</a></td>
+                <td><a href="RemoveApplication.aspx">Remove Application</a></td>
+                <td><a href="DisplayApplications.aspx">View all</a></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="5">
+                    <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <h3>Contact Us:</h3> 
+                    <address>
+                        HDFC Loans Systems, 
+                        Mumbai, Maharashtra, India
+                    </address>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    </form>
+</body>
+</html>
