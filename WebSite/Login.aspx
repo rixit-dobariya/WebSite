@@ -5,6 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <style>
+        .error{
+            color:red;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -13,11 +18,17 @@
             <table>
                 <tr>
                     <td>Email:</td>
-                    <td><asp:TextBox ID="txtEmail" runat="server"></asp:TextBox></td>
+                    <td><asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:RequiredFieldValidator CssClass="error" ID="RequiredFieldValidator1" runat="server" ErrorMessage="Email must not be empty" ControlToValidate="txtEmail"></asp:RequiredFieldValidator>
+                    </td>
                 </tr>
                 <tr>
                     <td>Password:</td>
-                    <td><asp:TextBox ID="txtPassword" runat="server"></asp:TextBox></td>
+                    <td><asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:RequiredFieldValidator CssClass="error" ID="RequiredFieldValidator2" runat="server" ErrorMessage="Password must not be empty" ControlToValidate="txtPassword"></asp:RequiredFieldValidator>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">

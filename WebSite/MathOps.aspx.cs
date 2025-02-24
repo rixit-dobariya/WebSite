@@ -34,7 +34,7 @@ public partial class MathOps : System.Web.UI.Page
                     break;
             }
         }
-        catch(DivideByZeroException e)
+        catch(DivideByZeroException)
         {
             lblAnswer.Text = "You cannot divide number by 0";
         }

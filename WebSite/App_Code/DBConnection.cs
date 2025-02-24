@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+﻿using System.Data.SqlClient;
 
 /// <summary>
 /// Summary description for DBConnection
@@ -22,10 +18,5 @@ namespace HDFC
             con.Open();
         }
 
-        int executeQuery(string query)
-        {
-            cmd = new SqlCommand(query, con);
-            return cmd.ExecuteNonQuery();
-        }
     }
 }

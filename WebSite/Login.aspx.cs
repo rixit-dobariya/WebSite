@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HDFC;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using HDFC;
 
 public partial class Login : System.Web.UI.Page
 {
@@ -18,16 +13,17 @@ public partial class Login : System.Web.UI.Page
 
     protected void btnSignIn_Click(object sender, EventArgs e)
     {
-        string email  =txtEmail.Text;
+        string email = txtEmail.Text;
         string password = txtPassword.Text;
-
-        string query = $"select * from User where UserEmail={email} and Password={password}";
+        string query = $"select * from Users where UserEmail='{email}' and Password='{password}'";
         SqlDataAdapter adapter = new SqlDataAdapter(query, conHelper.con);
-        DataSet dataSet = new DataSet();
-
-        if (dataSet.Tables[0].Rows.Count>0)
+        DataSet ds = new DataSet();
+        adapter.Fill(ds);
+        if (ds.Tables[0].Rows.Count > 0)
         {
+            Session["Email"] = ds.Tables[0].Rows[0]["UserEmail"];
             lblResponse.Text = "Login Successful";
+            Response.Redirect("Home.aspx");
         }
         else
         {
