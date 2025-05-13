@@ -5,16 +5,17 @@ using HDFC;
 
 public partial class NewApplication : System.Web.UI.Page
 {
-    DBConnection conHelper;
+    SqlConnection con;
     protected void Page_Load(object sender, EventArgs e)
     {
-        conHelper = new DBConnection();
+        con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\01\source\repos\WebSite\WebSite\App_Data\HDFC_Loans.mdf;Integrated Security=True");
+        con.Open();
     }
 
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
         string query="insert into Loans(AccountNo, LoanCategory, LoanType, IssueDate, Amount, CurrentAddress, LoanRemarks) values(@accountNo, @loanCategory, @loanType, @issueDate, @amount, @currentAddress, @loanRemarks)";
-        SqlCommand cmd = new SqlCommand(query, conHelper.con);
+        SqlCommand cmd = new SqlCommand(query, con);
         cmd.Parameters.AddWithValue("@accountNo", txtSavingAccNo.Text);
         cmd.Parameters.AddWithValue("@loanCategory", ddlLoanCategory.Text);
         cmd.Parameters.AddWithValue("@loanType", ddlLoanType.Text);
@@ -26,12 +27,22 @@ public partial class NewApplication : System.Web.UI.Page
         cmd.ExecuteNonQuery();
         lblResponse.Text = "Record inserted successfully!";
 
+        ddlLoanCategory.SelectedIndex = 0;
+        ddlLoanType.SelectedIndex = 0;
+        txtSavingAccNo.Text = "";
+        txtIssueDate.Text = "";
+        txtLoanAmount.Text = "";
+        txtCurrAddress.Text = "";
+        txtLoanRemarks.Text = "";
+        txtHolderName.Text = "";
+
+
     }
 
     protected void txtSavingAccNo_TextChanged(object sender, EventArgs e)
     {
         string savingAccNo = txtSavingAccNo.Text;
-        SqlCommand cmd = new SqlCommand("select ActHolderName from Accounts where SavingActNo=@accNo", conHelper.con);
+        SqlCommand cmd = new SqlCommand("select ActHolderName from Accounts where SavingActNo=@accNo", con);
         cmd.Parameters.AddWithValue("accNo", savingAccNo);
 
         DataTable dt = new DataTable();

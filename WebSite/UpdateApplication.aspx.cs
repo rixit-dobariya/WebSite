@@ -5,16 +5,17 @@ using HDFC;
 
 public partial class UpdateApplication : System.Web.UI.Page
 {
-    DBConnection conHelper;
+    SqlConnection con;
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.conHelper = new DBConnection();
+        con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\01\source\repos\WebSite\WebSite\App_Data\HDFC_Loans.mdf;Integrated Security=True");
+        con.Open();
     }
 
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
         string query = @"update Loans set AccountNo=@accountNo, LoanCategory=@loanCategory, LoanType=@loanType, IssueDate=@issueDate, Amount=@amount, CurrentAddress=@currentAddress, LoanRemarks=@loanRemarks where LoanNo=@loanNo";
-        SqlCommand cmd = new SqlCommand(query, conHelper.con);
+        SqlCommand cmd = new SqlCommand(query, con);
         cmd.Parameters.AddWithValue("accountNo", txtSavingAccNo.Text);
         cmd.Parameters.AddWithValue("loanCategory", ddlLoanCategory.Text);
         cmd.Parameters.AddWithValue("loanType", ddlLoanType.Text);
@@ -26,13 +27,21 @@ public partial class UpdateApplication : System.Web.UI.Page
 
         cmd.ExecuteNonQuery();
         lblResponse.Text = "Record updated successfully!";
-
+        ddlLoanCategory.SelectedIndex = 0;
+        ddlLoanType.SelectedIndex = 0;
+        txtSavingAccNo.Text = "";
+        txtIssueDate.Text = "";
+        txtLoanAmount.Text = "";
+        txtCurrAddress.Text = "";
+        txtLoanRemarks.Text = "";
+        txtHolderName.Text = "";
+        txtLoanNo.Text = "";
     }
 
     protected void txtSavingAccNo_TextChanged(object sender, EventArgs e)
     {
         string savingAccNo = txtSavingAccNo.Text;
-        SqlCommand cmd = new SqlCommand("select ActHolderName from Accounts where SavingActNo=@accNo", conHelper.con);
+        SqlCommand cmd = new SqlCommand("select ActHolderName from Accounts where SavingActNo=@accNo", con);
         cmd.Parameters.AddWithValue("accNo", savingAccNo);
 
         DataTable dt = new DataTable();
@@ -53,7 +62,7 @@ public partial class UpdateApplication : System.Web.UI.Page
     protected void btnGetLoanDetails_Click(object sender, EventArgs e)
     {
         string loanNo = txtLoanNo.Text;
-        SqlCommand cmd = new SqlCommand("select * from Loans l left join Accounts a ON a.SavingActNo = l.AccountNo where l.LoanNo=@loanNo", conHelper.con);
+        SqlCommand cmd = new SqlCommand("select * from Loans l left join Accounts a ON a.SavingActNo = l.AccountNo where l.LoanNo=@loanNo", con);
         cmd.Parameters.AddWithValue("loanNo", loanNo);
 
         DataTable dt = new DataTable();

@@ -5,19 +5,18 @@ using System.Data.SqlClient;
 
 public partial class DisplayApplications : System.Web.UI.Page
 {
-    DBConnection conHelper;
     protected void Page_Load(object sender, EventArgs e)
     {
-        conHelper = new DBConnection();
+       SqlConnection con= new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\01\source\repos\WebSite\WebSite\App_Data\HDFC_Loans.mdf;Integrated Security=True");
+        con.Open();
         DataTable dataTable = new DataTable();
         string query = @"select LoanNo, AccountNo, ActHolderName, Profession, Email, ContactNo, LoanCategory, LoanType, IssueDate, Amount, CurrentAddress, LoanRemarks from Loans 
             inner join Accounts on Loans.AccountNo = Accounts.SavingActNo";
-        using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(query, conHelper.con))
+        using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(query, con))
         {
             sqlDataAdapter.Fill(dataTable);
             LoanGridView.DataSource = dataTable;
             LoanGridView.DataBind();
         }
-            
     }
 }

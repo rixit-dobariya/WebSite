@@ -6,17 +6,18 @@ using System.Data;
 public partial class RemoveApplication : System.Web.UI.Page
 {
 
-    DBConnection conHelper;
+    SqlConnection con;
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.conHelper = new DBConnection();
+        con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\01\source\repos\WebSite\WebSite\App_Data\HDFC_Loans.mdf;Integrated Security=True");
+        con.Open();
     }
 
 
     protected void btnGetLoanDetails_Click(object sender, EventArgs e)
     {
         string loanNo = txtLoanNo.Text;
-        SqlCommand cmd = new SqlCommand("select * from Loans l left join Accounts a ON a.SavingActNo = l.AccountNo where l.LoanNo=@loanNo", conHelper.con);
+        SqlCommand cmd = new SqlCommand("select * from Loans l left join Accounts a ON a.SavingActNo = l.AccountNo where l.LoanNo=@loanNo", con);
         cmd.Parameters.AddWithValue("loanNo", loanNo);
 
         DataTable dt = new DataTable();
@@ -33,6 +34,7 @@ public partial class RemoveApplication : System.Web.UI.Page
             txtCurrAddress.Text = dt.Rows[0]["CurrentAddress"].ToString();
             txtLoanRemarks.Text = dt.Rows[0]["LoanRemarks"].ToString();
             lblResponse.Text = "";
+
         }
         else
         {
@@ -43,10 +45,20 @@ public partial class RemoveApplication : System.Web.UI.Page
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
         string query = @"delete from Loans where LoanNo=@loanNo";
-        SqlCommand cmd = new SqlCommand(query, conHelper.con);
+        SqlCommand cmd = new SqlCommand(query, con);
         cmd.Parameters.AddWithValue("loanNo", txtLoanNo.Text);
 
         cmd.ExecuteNonQuery();
         lblResponse.Text = "Record Removed successfully!";
+        ddlLoanCategory.SelectedIndex = 0;
+        ddlLoanType.SelectedIndex = 0;
+        txtSavingAccNo.Text = "";
+        txtIssueDate.Text = "";
+        txtLoanAmount.Text = "";
+        txtCurrAddress.Text = "";
+        txtLoanRemarks.Text = "";
+        txtHolderName.Text = "";
+        txtLoanNo.Text = "";
+
     }
 }

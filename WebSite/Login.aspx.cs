@@ -5,10 +5,11 @@ using System.Data.SqlClient;
 
 public partial class Login : System.Web.UI.Page
 {
-    DBConnection conHelper;
+    SqlConnection con;
     protected void Page_Load(object sender, EventArgs e)
     {
-        conHelper = new DBConnection();
+        con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\01\source\repos\WebSite\WebSite\App_Data\HDFC_Loans.mdf;Integrated Security=True");
+        con.Open();
     }
 
     protected void btnSignIn_Click(object sender, EventArgs e)
@@ -16,7 +17,7 @@ public partial class Login : System.Web.UI.Page
         string email = txtEmail.Text;
         string password = txtPassword.Text;
         string query = $"select * from Users where UserEmail='{email}' and Password='{password}'";
-        SqlDataAdapter adapter = new SqlDataAdapter(query, conHelper.con);
+        SqlDataAdapter adapter = new SqlDataAdapter(query, con);
         DataSet ds = new DataSet();
         adapter.Fill(ds);
         if (ds.Tables[0].Rows.Count > 0)

@@ -14,7 +14,7 @@
             <td>Loan No:</td>
             <td>
                 <asp:TextBox ID="txtLoanNo" runat="server" ></asp:TextBox>
-                <asp:Button ID="btnGetLoanDetails" CausesValidation="false" runat="server" Text="Get Loan Details"  OnClick="btnGetLoanDetails_Click" />
+                <asp:Button ID="btnGetLoanDetails" CausesValidation="false"  runat="server" Text="Get Loan Details"  OnClick="btnGetLoanDetails_Click" />
             </td>
         </tr>
         <tr>
